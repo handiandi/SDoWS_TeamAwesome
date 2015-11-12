@@ -24,8 +24,9 @@ public class LameDuck {
      */
     @WebMethod(operationName = "getFlights")
     public java.lang.String[] getFlights(@WebParam(name = "startsAt") String startsAt, @WebParam(name = "endsAt") String endsAt, @WebParam(name = "date") Date date) {
-        
-        return {"2000#007#LameDuck#flight:1337"};
+        String[] test = new String[1];
+        test[0] = "hej";
+        return test;
     }
 
     /**
