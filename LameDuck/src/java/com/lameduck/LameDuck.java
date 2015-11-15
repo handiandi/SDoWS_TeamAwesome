@@ -5,7 +5,10 @@
  */
 package com.lameduck;
 
+import com.lameduck.FlightInformation.Flight;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -22,13 +25,15 @@ public class LameDuck {
     /**
      * Web service operation
      */
+    
     @WebMethod(operationName = "getFlights")
     public java.lang.String[] getFlights(@WebParam(name = "startsAt") String startsAt, @WebParam(name = "endsAt") String endsAt, @WebParam(name = "date") Date date) {
         String[] test = new String[1];
         test[0] = "hej";
         return test;
     }
-
+    
+   
     /**
      * Web service operation
      */
