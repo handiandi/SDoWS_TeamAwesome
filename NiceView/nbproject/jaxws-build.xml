@@ -19,11 +19,11 @@
             <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
         </taskdef>
     </target>
-    <target name="wsgen-LameDuck" depends="wsgen-init">
+    <target name="wsgen-NiceView" depends="wsgen-init">
         <copy todir="${build.classes.dir}/META-INF">
-            <fileset dir="${webinf.dir}" includes="wsit-com.lameduck.LameDuck.xml"/>
+            <fileset dir="${webinf.dir}" includes="wsit-com.niceview.NiceView.xml"/>
         </copy>
-        <wsgen sourcedestdir="${build.generated.sources.dir}/jax-ws" resourcedestdir="${build.generated.sources.dir}/jax-ws/resources/" destdir="${build.generated.sources.dir}/jax-ws" verbose="true" keep="true" genwsdl="true" sei="com.lameduck.LameDuck" xendorsed="true">
+        <wsgen sourcedestdir="${build.generated.sources.dir}/jax-ws" resourcedestdir="${build.generated.sources.dir}/jax-ws/resources/" destdir="${build.generated.sources.dir}/jax-ws" verbose="true" keep="true" genwsdl="true" sei="com.niceview.NiceView" xendorsed="true">
             <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
         </wsgen>
     </target>
@@ -45,8 +45,8 @@
     </target>
     <target name="wsimport-service-FastMoney" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/service/FastMoney"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/service/FastMoney" destdir="${build.generated.dir}/jax-wsCache/service/FastMoney" wsdl="${basedir}/${conf-dir}xml-resources/web-services/FastMoney/wsdl/BankService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" xnocompile="true" xendorsed="true">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-services/FastMoney/wsdl/BankService.wsdl"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/service/FastMoney" destdir="${build.generated.dir}/jax-wsCache/service/FastMoney" wsdl="${basedir}/${conf-dir}xml-resources/web-services/FastMoney/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-services/FastMoney/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/service/FastMoney"/>
         </wsimport>
         <copy todir="${build.generated.sources.dir}/jax-ws">

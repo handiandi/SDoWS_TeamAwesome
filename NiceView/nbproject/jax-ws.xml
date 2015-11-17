@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services>
-    <service name="LameDuck">
-      <implementation-class>com.lameduck.LameDuck</implementation-class>
+    <service name="NiceView">
+      <implementation-class>com.niceview.NiceView</implementation-class>
     </service>
     <service name="FastMoney">
-      <implementation-class>com.lameduck.FastMoney</implementation-class>
-      <wsdl-url>file:/home/jeppe/Downloads/BankService.wsdl</wsdl-url>
-      <local-wsdl-file>BankService.wsdl</local-wsdl-file>
+      <implementation-class>com.niceview.FastMoney</implementation-class>
+      <wsdl-url>http://fastmoney.imm.dtu.dk:8080/BankService?wsdl</wsdl-url>
+      <local-wsdl-file>fastmoney.imm.dtu.dk_8080/BankService.wsdl</local-wsdl-file>
       <service-name>BankService</service-name>
       <port-name>BankPort</port-name>
       <package-name>dk.dtu.imm.fastmoney</package-name>

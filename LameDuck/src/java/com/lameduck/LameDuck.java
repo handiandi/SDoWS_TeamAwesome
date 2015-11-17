@@ -5,7 +5,10 @@
  */
 package com.lameduck;
 
+import com.lameduck.FlightInformation.Flight;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -20,6 +23,7 @@ public class LameDuck {
     /**
      * Web service operation
      */
+    
     @WebMethod(operationName = "getFlights")
     public FlightInformation[] getFlights(@WebParam(name = "startsAt") String startsAt, @WebParam(name = "endsAt") String endsAt, @WebParam(name = "date") Date date) {
         //TODO write some interesting hard coded flightinformation object
@@ -29,7 +33,8 @@ public class LameDuck {
         { new FlightInformation(0,0.0,"LameDuck",null), };
         return output;
     }
-
+    
+   
     /**
      * Web service operation
      */
