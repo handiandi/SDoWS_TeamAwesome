@@ -23,7 +23,7 @@ public class LameDuck {
      * Web service operation
      */
     @WebMethod(operationName = "getFlights")
-    public java.lang.String[] getFlights(@WebParam(name = "startsAt") String startsAt, @WebParam(name = "endsAt") String endsAt, @WebParam(name = "date") Date date) {
+    public FlightInformation[] getFlights(@WebParam(name = "startsAt") String startsAt, @WebParam(name = "endsAt") String endsAt, @WebParam(name = "date") Date date) {
         //TODO write your implementation code here:
         return null;
     }
@@ -32,7 +32,7 @@ public class LameDuck {
      * Web service operation
      */
     @WebMethod(operationName = "bookFlight")
-    public boolean bookFlight(@WebParam(name = "bookingNumber") int bookingNumber, @WebParam(name = "creditcardInformation") String creditcardInformation) throws BookingFailedException {
+    public boolean bookFlight(@WebParam(name = "bookingNumber") int bookingNumber, @WebParam(name = "creditcardInformation") CreditCardInformation creditcardInformation) throws BookingFailedException {
         //TODO write your implementation code here:
         return false;
     }
