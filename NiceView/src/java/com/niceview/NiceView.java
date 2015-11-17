@@ -11,25 +11,42 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 
 import  com.niceview.FastMoney;
+import java.util.ArrayList;
 /**
  *
  * @author jesper
  */
 @WebService(serviceName = "NiceView")
 public class NiceView {
-
+    
+        private HotelInformation CasaDeLyngby = new HotelInformation("Casa de Lyngby", "Lyngbyhovedgade 12", "Lyngby", true, 200, "reservationDOTdk", 0);
+        private HotelInformation Hotellet = new HotelInformation("Hotellet", "Nørre Alle 75", "København", false, 50, "StudentOffers", 0);
+        private ArrayList<HotelInformation> hotelList = new ArrayList<HotelInformation>();   
+        private ArrayList<HotelInformation> bookingList = new ArrayList<HotelInformation>(); //tempbooking list
+        
+        private String[] arrivalDateArray;
+        private String[] departureDateArray;
+        private ArrayList<HotelInformation> bookedHotels;
     /**
      * This is a sample web service operation
      */
     @WebMethod(operationName = "getHotels")
-    public String[] getHotels (@WebParam(name = "city") String city, @WebParam(name = "arrivalDate") Date arrivalDate, @WebParam(name = "departureDate") Date departureDate) {
-        return null;
+    public ArrayList<HotelInformation> getHotel(@WebParam(name = "city") String city, @WebParam(name = "arrivalDate") String arrivalDate, @WebParam(name = "departureDate") String departureDate) {
+        hotelList.clear();
+        bookingList.clear();
+        hotelList.add(CasaDeLyngby);
+        hotelList.add(Hotellet);
+        int j = 0;
+        ArrayList<HotelInformation> bookingList = new ArrayList<HotelInformation>();
+        
+            //TODO: Hotel magic
+        
+        return bookingList;
     }
     
     @WebMethod(operationName = "bookHotel")
     public boolean bookHotel (@WebParam(name = "bookingNumber") int bookingNumber, @WebParam(name = "creditcardInformation") String creditcardInformation) throws BookingFailedException {
-       
-        return false;
+       return false;
     }
     
     @WebMethod(operationName = "cancelHotel")
