@@ -9,8 +9,6 @@ import java.util.Date;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import javax.xml.ws.RequestWrapper;
-import javax.xml.ws.ResponseWrapper;
 
 /**
  *
@@ -24,15 +22,19 @@ public class LameDuck {
      */
     @WebMethod(operationName = "getFlights")
     public FlightInformation[] getFlights(@WebParam(name = "startsAt") String startsAt, @WebParam(name = "endsAt") String endsAt, @WebParam(name = "date") Date date) {
-        //TODO write your implementation code here:
-        return null;
+        //TODO write some interesting hard coded flightinformation object
+        // FlightInformation(int,double,String,Flight)
+        // Flight(String, String, Calendar, Calendar, String)
+        FlightInformation[] output = 
+        { new FlightInformation(0,0.0,"LameDuck",null), };
+        return output;
     }
 
     /**
      * Web service operation
      */
     @WebMethod(operationName = "bookFlight")
-    public boolean bookFlight(@WebParam(name = "bookingNumber") int bookingNumber, @WebParam(name = "creditcardInformation") CreditCardInformation creditcardInformation) throws BookingFailedException {
+    public boolean bookFlight(@WebParam(name = "bookingNumber") int bookingNumber, @WebParam(name = "creditcardInformation") dk.dtu.imm.fastmoney.types.CreditCardInfoType creditcardInformation) throws BookingFailedException {
         //TODO write your implementation code here:
         return false;
     }
@@ -41,7 +43,7 @@ public class LameDuck {
      * Web service operation
      */
     @WebMethod(operationName = "cancelFlight")
-    public boolean cancelFlight(@WebParam(name = "bookingNumber") int bookingNumber,@WebParam(name = "price") int price,@WebParam(name = "creditcardInformation") String creditcardInformation){
+    public boolean cancelFlight(@WebParam(name = "bookingNumber") int bookingNumber,@WebParam(name = "price") int price,@WebParam(name = "creditcardInformation") dk.dtu.imm.fastmoney.types.CreditCardInfoType creditcardInformation){
         
         return false;
     }
