@@ -5,7 +5,6 @@
  */
 package com.lameduck;
 
-import java.util.Calendar;
 
 /**
  *
@@ -43,8 +42,8 @@ class FlightInformation {
     public class Flight{
         final String startAirport;
         final String endAirport;
-        final Calendar liftOffTime;
-        final Calendar landingTime;
+        final String liftOffTime;
+        final String landingTime;
         final String carrier;
 
         public String getStartAirport() {
@@ -55,11 +54,11 @@ class FlightInformation {
             return endAirport;
         }
 
-        public Calendar getLiftOffTime() {
+        public String getLiftOffTime() {
             return liftOffTime;
         }
 
-        public Calendar getLandingTime() {
+        public String getLandingTime() {
             return landingTime;
         }
 
@@ -67,7 +66,7 @@ class FlightInformation {
             return carrier;
         }
 
-        public Flight(String startAirport, String endAirport, Calendar liftOffTime, Calendar landingTime, String carrier) {
+        public Flight(String startAirport, String endAirport, String liftOffTime, String landingTime, String carrier) {
             this.startAirport = startAirport;
             this.endAirport = endAirport;
             this.liftOffTime = liftOffTime;

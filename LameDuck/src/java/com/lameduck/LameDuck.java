@@ -27,10 +27,11 @@ public class LameDuck {
     @WebMethod(operationName = "getFlights")
     public FlightInformation[] getFlights(@WebParam(name = "startsAt") String startsAt, @WebParam(name = "endsAt") String endsAt, @WebParam(name = "date") Date date) {
         //TODO write some interesting hard coded flightinformation object
-        // FlightInformation(int,double,String,Flight)
-        // Flight(String, String, Calendar, Calendar, String)
-        FlightInformation[] output = 
-        { new FlightInformation(0,0.0,"LameDuck",null), };
+        FlightInformation[] output = new FlightInformation[10];
+        for(int i = 0; i < 10; i++){
+            Flight f = new FlightInformation.Flight("Copenhagen","Stockholm","00,00,01,01,1970","02,00,01,01,1970","Planes'r'Us");
+            output[i] = new FlightInformation(i,i*1000-0.05,"LameDuck",f);
+        }
         return output;
     }
     
