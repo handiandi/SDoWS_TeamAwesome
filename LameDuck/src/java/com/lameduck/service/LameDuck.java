@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.lameduck;
+package com.lameduck.service;
 
-import com.lameduck.FlightInformation.Flight;
+import com.lameduck.service.Flight;
+import com.lameduck.service.FlightInformation;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +30,7 @@ public class LameDuck {
         //TODO write some interesting hard coded flightinformation object
         FlightInformation[] output = new FlightInformation[10];
         for(int i = 0; i < 10; i++){
-            Flight f = new FlightInformation.Flight("Copenhagen","Stockholm","00,00,01,01,1970","02,00,01,01,1970","Planes'r'Us");
+            Flight f = new Flight("Copenhagen","Stockholm","00,00,01,01,1970","02,00,01,01,1970","Planes'r'Us");
             output[i] = new FlightInformation(i,i*1000-0.05,"LameDuck",f);
         }
         return output;
