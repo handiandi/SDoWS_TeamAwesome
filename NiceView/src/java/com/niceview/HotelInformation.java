@@ -71,7 +71,9 @@ public class HotelInformation {
         this.price = price;
     }
 
-    void setBookingNo(int bookingNo) {
+    protected void setBookingNo(int bookingNo) {
         this.bookingNo = bookingNo;
     }
+    
+    
 }

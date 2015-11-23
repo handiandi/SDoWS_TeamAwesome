@@ -17,7 +17,7 @@ public class Booking {
     private int      priceOfStay;
     private String   bookingService;
     
-    public Booking(String hotelName, Address address, int days, boolean creditCardGuarentee, int priceForStay, String bookingService, int hotelId){
+    public Booking(String hotelName, Address address, int days, boolean creditCardGuarentee, int priceOfStay, String bookingService, int hotelId){
         this.hotelName = hotelName;
         this.address = address;
         this.creditCardGuarentee = creditCardGuarentee;
