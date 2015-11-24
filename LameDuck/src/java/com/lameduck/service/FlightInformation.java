@@ -10,7 +10,7 @@ package com.lameduck.service;
  *
  * @author jeppe
  */
-class FlightInformation {
+public class FlightInformation {
     final int bookingNumber;
     final double price;
     final String airlineReservationService;
