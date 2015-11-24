@@ -10,18 +10,19 @@ package com.niceview;
  * @author Troels
  */
 public class HotelInformation {
-    final String bookingnumber;
+    final int bookingNumber;
     final Hotel hotel;
     final int price;
     
-    public HotelInformation(String boString, Hotel hotel, int price ){
-        this.bookingnumber=boString;
+    
+    public HotelInformation(int bookingNumber, Hotel hotel, int price ){
+        this.bookingNumber=bookingNumber;
         this.hotel = hotel;
         this.price=price;
     }
 
-    public String getBookingnumber() {
-        return bookingnumber;
+    public int getBookingnumber() {
+        return bookingNumber;
     }
 
     public Hotel getHotel() {

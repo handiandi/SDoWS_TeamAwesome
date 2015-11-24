@@ -16,110 +16,126 @@ import javax.jws.WebParam;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.xml.ws.WebServiceRef;
+
 /**
  *
  * @author jesper
  */
 @WebService(serviceName = "NiceView")
 public class NiceView {
+
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl")
     private BankService service;
-    
-        final Hotel CasaDeLyngby = new Hotel("Casa de Lyngby", "Lyngbyhovedgade 12", "Lyngby", true, 200, "reservationDOTdk", 0);
-        final Hotel Hotellet = new Hotel("Hotellet", "Nørre Alle 75", "København", false, 50, "StudentOffers", 0);
-        private ArrayList<Hotel> allHotelsList = new ArrayList<>();   
-        private ArrayList<HotelInformation> hotelsInAreaList = new ArrayList<>();
-        private int bookRef = 0;
-        
-        private String[] arrivalDateArray;
-        private String[] departureDateArray;
-        private ArrayList<HotelInformation> bookedHotelsList;
+
+    private static List<Hotel> allHotelsList;// = new List<>(); static i stedet
+    private static List<HotelInformation> hotelsInAreaList;
+    private int bookRef = 0;
+
+    private static AccountType ACCOUNT;
+    private static final int GROUP = 14;
+    private static final String ACCOUNT_NUMBER = "50308815";
+    private static final String ACCOUNT_NAME = "NiceView";
+
+    //private String[] arrivalDateArray;
+    //private String[] departureDateArray;
+    private ArrayList<HotelInformation> bookedHotelsList;
+
+    static {
+        //hotelsInAreaList = new List<>();
+        ACCOUNT = new AccountType();
+        ACCOUNT.setName(ACCOUNT_NAME);
+        ACCOUNT.setNumber(ACCOUNT_NUMBER);
+
+        allHotelsList.clear();
+
+        Hotel CasaDeLyngby = new Hotel("Casa de Lyngby", "Lyngbyhovedgade 12", "Lyngby", true, 200, "reservationDOTdk", 0);
+        Hotel Hotellet = new Hotel("Hotellet", "Nørre Alle 75", "København", false, 50, "StudentOffers", 0);
+
+        allHotelsList.add(CasaDeLyngby);
+        allHotelsList.add(Hotellet);
+    }
+
     /**
      * This is a sample web service operation
      */
     @WebMethod(operationName = "getHotels")
-    public ArrayList<HotelInformation> getHotel(@WebParam(name = "city") 
-            String city, @WebParam(name = "arrivalDate") String arrivalDate, 
+    public List<HotelInformation> getHotel(@WebParam(name = "city") String city, @WebParam(name = "arrivalDate") String arrivalDate,
             @WebParam(name = "departureDate") String departureDate) {
-        allHotelsList.clear();
-        hotelsInAreaList.clear();
-        allHotelsList.add(CasaDeLyngby);
-        allHotelsList.add(Hotellet);
-        
 
-        
+        hotelsInAreaList.clear();
 
         //int j = 0;
         //ArrayList<HotelInformation> bookingList = new ArrayList<HotelInformation>();
         //Find hotels
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:dd:MM:yyyy");
-        int days=0;
-        try{
-        Date arrivDate = sdf.parse(arrivalDate);
-        Date depDate = sdf.parse(departureDate);
-        long dif = depDate.getTime()-arrivDate.getTime();
-        days =  (int) TimeUnit.DAYS.convert(dif, TimeUnit.MILLISECONDS); //check this works...
-        }catch(Exception e){
+        int days = 0;
+        try {
+            Date arrivDate = sdf.parse(arrivalDate);
+            Date depDate = sdf.parse(departureDate);
+            long dif = depDate.getTime() - arrivDate.getTime();
+            days = (int) TimeUnit.DAYS.convert(dif, TimeUnit.MILLISECONDS); //check this works...
+        } catch (Exception e) {
         }
-        
+
         for (Hotel hotel : allHotelsList) {
-            if (hotel.getCity().equalsIgnoreCase(city)) 
-                hotelsInAreaList.add(new HotelInformation(getBookingRef(), hotel, hotel.getPrice()*days));
-            
+            if (hotel.getCity().equalsIgnoreCase(city)) {
+                hotelsInAreaList.add(new HotelInformation(getBookingRef(), hotel, hotel.getPrice() * days));
+            }
+
         }
-                   
-        
-        
+
         return hotelsInAreaList;
     }
-    
+
     @WebMethod(operationName = "bookHotel")
-    public boolean bookHotel (@WebParam(name = "bookingNumber") 
-            String bookingNumber, @WebParam(name = "creditcardInformation") 
-            bank.ws.CreditCardInfoType creditcardInformation) 
+    public boolean bookHotel(@WebParam(name = "bookingNumber") int bookingNumber, @WebParam(name = "creditcardInformation") bank.ws.CreditCardInfoType creditcardInformation)
             throws BookingFailedException, CreditCardFaultMessage {
-       
-        
-        for ( HotelInformation hotel : hotelsInAreaList ){
-            if (hotel.getBookingnumber().equals(bookingNumber)){
+
+        for (HotelInformation hotel : hotelsInAreaList) {
+            if (hotel.getBookingnumber()==bookingNumber) {
                 //do stuff
                 //validate credit card if guarantee needed
                 //charge credit card, evt. catch exception + fault handling
-                if(hotel.getHotel().getCreditCardGuarantee()){
-                    if(!validateCreditCard(14, creditcardInformation, hotel.getPrice())){
+                if (hotel.getHotel().getCreditCardGuarantee()) {
+                    if (!validateCreditCard(14, creditcardInformation, hotel.getPrice())) {
                         //fault handling
                         break;
                     }
-                        
+
                 }
                 //book
-                AccountType niceAccount = new AccountType();
-                niceAccount.setName("NiceView");
-                niceAccount.setNumber("50308815");
-                
-                if(!chargeCreditCard(14, creditcardInformation, hotel.price, niceAccount)){
+
+                if (!chargeCreditCard(GROUP, creditcardInformation, hotel.price, ACCOUNT)) {
                     //fault handling
                     throw new BookingFailedException();
                 }
-                
-                
+
                 bookedHotelsList.add(hotel);
             }
         }
-        
+
         return false;
     }
-    
+
     @WebMethod(operationName = "cancelHotel")
-    public boolean cancelHotel (@WebParam(name = "bookingNumber") int bookingNumber)  {
-        return false;
+    public boolean cancelHotel(@WebParam(name = "bookingNumber") int bookingNumber) throws CancelFailedException {
+        boolean canceled = false;
+        for (HotelInformation booking : bookedHotelsList){
+            if(booking.getBookingnumber()==bookingNumber)
+                canceled = bookedHotelsList.remove(booking);
+        }
+            
+        if (!canceled)
+            throw new CancelFailedException("Booking Number not in list of bookings");
+        return canceled;
     }
-    
-    
-    private String getBookingRef(){
-        return "hot" + bookRef;
+
+    private int getBookingRef() {
+        bookRef+=1;
+        return  bookRef;
     }
 
     private boolean chargeCreditCard(int group, bank.ws.CreditCardInfoType creditCardInfo, int amount, bank.ws.AccountType account) throws CreditCardFaultMessage {
@@ -142,5 +158,5 @@ public class NiceView {
         bank.ws.BankPortType port = service.getBankPort();
         return port.validateCreditCard(group, creditCardInfo, amount);
     }
-    
+
 }
