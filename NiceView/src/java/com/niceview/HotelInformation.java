@@ -14,7 +14,7 @@ public class HotelInformation {
     final Hotel hotel;
     final int price;
     
-    public HotelInformation(String boString, Hotel hotel, double price ){
+    public HotelInformation(String boString, Hotel hotel, int price ){
         this.bookingnumber=boString;
         this.hotel = hotel;
         this.price=price;

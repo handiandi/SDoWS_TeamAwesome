@@ -8,7 +8,7 @@ package com.niceview;
 import bank.ws.AccountType;
 import bank.ws.BankService;
 import bank.ws.CreditCardFaultMessage;
-import bank.ws.FastMoney;
+//import bank.ws.FastMoney; ??
 import java.util.Date;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -98,7 +98,11 @@ public class NiceView {
                 AccountType niceAccount = new AccountType();
                 niceAccount.setName("NiceView");
                 niceAccount.setNumber("50308815");
-                chargeCreditCard(14, creditcardInformation, hotel.price, niceAccount);
+                
+                if(!chargeCreditCard(14, creditcardInformation, hotel.price, niceAccount)){
+                    //fault handling
+                    throw new BookingFailedException();
+                }
                 
                 
                 bookedHotelsList.add(hotel);

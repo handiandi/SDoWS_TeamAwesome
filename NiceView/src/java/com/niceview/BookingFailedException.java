@@ -10,5 +10,16 @@ package com.niceview;
  * @author Mr. Awesome
  */
 public class BookingFailedException extends Exception {
-    
+    public BookingFailedException(){
+        super();
+    }
+    public BookingFailedException(String message){
+        super(message);
+    }
+    public BookingFailedException(Throwable cause){
+        super(cause);
+    }
+    public BookingFailedException(String message, Throwable cause){
+        super(message, cause);
+    }
 }
