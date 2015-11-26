@@ -31,7 +31,7 @@ public class NiceView {
     private BankService service;
 
     private static List<Hotel> allHotelsList;// = new List<>(); static i stedet
-    private static List<HotelInformation> hotelsInAreaList;
+    private static List<HotelInformation> hotelsInAreaList = new ArrayList<>();
     private int bookRef = 0;
 
     private static AccountType ACCOUNT;
@@ -48,7 +48,7 @@ public class NiceView {
         ACCOUNT = new AccountType();
         ACCOUNT.setName(ACCOUNT_NAME);
         ACCOUNT.setNumber(ACCOUNT_NUMBER);
-
+        allHotelsList = new ArrayList<>();
         allHotelsList.clear();
 
         Hotel CasaDeLyngby = new Hotel("Casa de Lyngby", "Lyngbyhovedgade 12", "Lyngby", true, 200, "reservationDOTdk", 0);
