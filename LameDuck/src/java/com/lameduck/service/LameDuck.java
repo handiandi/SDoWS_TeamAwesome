@@ -35,7 +35,7 @@ public class LameDuck {
         ACCOUNT = new AccountType();
         ACCOUNT.setName(ACCOUNT_NAME);
         ACCOUNT.setNumber(ACCOUNT_NUMBER);
-        
+        availableFlights = new ArrayList<>();
         for(int i = 0; i < 10; i++){
             Flight f = new Flight("Copenhagen","Stockholm","00,00,01,01,1970","02,00,01,01,1970","Planes'r'Us");
             availableFlights.add(new FlightInformation(i,i*1000-0.05,"LameDuck",f));
