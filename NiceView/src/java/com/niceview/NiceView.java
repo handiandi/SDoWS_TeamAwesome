@@ -81,9 +81,9 @@ public class NiceView {
         }
 
         for (Hotel hotel : allHotelsList) {
-            if (hotel.getCity().equalsIgnoreCase(city)) {
+            //if (hotel.getCity().equalsIgnoreCase(city)) {
                 hotelsInAreaList.add(new HotelInformation(getBookingRef(), hotel, hotel.getPrice() * days));
-            }
+            //}
 
         }
 
