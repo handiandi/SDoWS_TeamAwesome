@@ -18,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.ws.WebServiceRef;
 
 /**
@@ -81,9 +83,9 @@ public class NiceView {
         }
 
         for (Hotel hotel : allHotelsList) {
-            //if (hotel.getCity().equalsIgnoreCase(city)) {
-                hotelsInAreaList.add(new HotelInformation(getBookingRef(), hotel, hotel.getPrice() * days));
-            //}
+            if (hotel.getCity().equalsIgnoreCase(city)) {
+            hotelsInAreaList.add(new HotelInformation(getBookingRef(), hotel, hotel.getPrice() * days));
+            }
 
         }
 
@@ -94,48 +96,65 @@ public class NiceView {
     public boolean bookHotel(@WebParam(name = "bookingNumber") int bookingNumber, @WebParam(name = "creditcardInformation") bank.ws.CreditCardInfoType creditcardInformation)
             throws BookingFailedException, CreditCardFaultMessage {
 
-        for (HotelInformation hotel : hotelsInAreaList) {
-            if (hotel.getBookingnumber()==bookingNumber) {
-                //do stuff
-                //validate credit card if guarantee needed
-                //charge credit card, evt. catch exception + fault handling
-                if (hotel.getHotel().getCreditCardGuarantee()) {
-                    if (!validateCreditCard(14, creditcardInformation, hotel.getPrice())) {
-                        //fault handling
-                        break;
-                    }
+        boolean hasPaid = false;
+        HotelInformation h = null;
 
+        try {
+            for (HotelInformation hotel : hotelsInAreaList) {
+                if (hotel.getBookingnumber() == bookingNumber) {
+                    h = hotel;
                 }
-                //book
-
-                if (!chargeCreditCard(GROUP, creditcardInformation, hotel.price, ACCOUNT)) {
-                    //fault handling
-                    throw new BookingFailedException();
-                }
-
-                bookedHotelsList.add(hotel);
             }
-        }
+            if (h == null) {
+                throw new BookingFailedException("Hotel not found");
+            }
+            //charge credit card, evt. catch exception + fault handling
+            if (h.getHotel().getCreditCardGuarantee()) {
+                if (validateCreditCard(14, creditcardInformation, h.getPrice())) {
+                    hasPaid = chargeCreditCard(GROUP, creditcardInformation, h.price, ACCOUNT);
+                }
+                if (hasPaid) {
+                    hotelsInAreaList.remove(h);
+                    bookedHotelsList.add(h);
+                }
+            }
+            return hasPaid;
 
-        return false;
+         } catch (CreditCardFaultMessage ex) {
+            Logger.getLogger(NiceView.class.getName()).log(Level.SEVERE, null, ex);
+            if(hasPaid) try {
+                if(h == null) throw new BookingFailedException("Booking number does not exist");
+                refundCreditCard(GROUP,creditcardInformation,(int)(h.getPrice()),ACCOUNT);
+            } catch (CreditCardFaultMessage ex1) {
+                Logger.getLogger(NiceView.class.getName()).log(Level.SEVERE, null, ex1);
+                throw new BookingFailedException("Booking failed; Payment received; Refund failed");
+            }
+            if(bookedHotelsList.contains(h)){
+                bookedHotelsList.remove(h);
+                hotelsInAreaList.add(h);
+            }
+            throw new BookingFailedException("Booking failed; Payment not received");
+        }
     }
 
     @WebMethod(operationName = "cancelHotel")
     public boolean cancelHotel(@WebParam(name = "bookingNumber") int bookingNumber) throws CancelFailedException {
         boolean canceled = false;
-        for (HotelInformation booking : bookedHotelsList){
-            if(booking.getBookingnumber()==bookingNumber)
+        for (HotelInformation booking : bookedHotelsList) {
+            if (booking.getBookingnumber() == bookingNumber) {
                 canceled = bookedHotelsList.remove(booking);
+            }
         }
-            
-        if (!canceled)
+
+        if (!canceled) {
             throw new CancelFailedException("Booking Number not in list of bookings");
+        }
         return canceled;
     }
 
     private int getBookingRef() {
-        bookRef+=1;
-        return  bookRef;
+        bookRef += 1;
+        return bookRef;
     }
 
     private boolean chargeCreditCard(int group, bank.ws.CreditCardInfoType creditCardInfo, int amount, bank.ws.AccountType account) throws CreditCardFaultMessage {

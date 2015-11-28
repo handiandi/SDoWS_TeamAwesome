@@ -10,12 +10,19 @@
     xmlns:sxed="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2"
     xmlns:sxat="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment"
     xmlns:sxeh="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/ErrorHandling">
+    <!-- 
     <import namespace="http://travelGoodWSDL.ws" location="travelGoodWSDL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
-    <import namespace="http://travelGoodBPEL.ws" location="travelGoodBPEL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
-    <import namespace="http://enterprise.netbeans.org/bpel/LameDuckWrapper" location="http://tbh:8080/LameDuck/LameDuck?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://travelGoodBPEL.ws" location="travelGoodBPEL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/> 
+    <import namespace="http://enterprise.netbeans.org/bpel/LameDuckWrapper" location="http://tbh:8080/LameDuck/LameDuck?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>-->
     <import namespace="http://travelGood.ws" location="travelGood.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
         <partnerLink name="PartnerLink1" xmlns:tns="http://travelGood.ws" partnerLinkType="tns:travelGood" myRole="travelGoodPortTypeRole"/>
     </partnerLinks>
-    <sequence></sequence>
+    <variables>
+        <variable name="CreateItineraryOut" xmlns:tns="http://travelGood.ws" messageType="tns:createItineraryResponse"/>
+    </variables>
+    <sequence>
+        <receive name="Receive1" createInstance="yes" partnerLink="PartnerLink1" operation="createItinerary" xmlns:tns="http://travelGood.ws" portType="tns:travelGoodPortType"/>
+        <reply name="createItineraryReply" partnerLink="PartnerLink1" operation="createItinerary" xmlns:tns="http://travelGood.ws" portType="tns:travelGoodPortType" variable="CreateItineraryOut"/>
+    </sequence>
 </process>

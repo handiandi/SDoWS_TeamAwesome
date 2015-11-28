@@ -3,4 +3,6 @@
     <system systemId="http://tbh:8080/LameDuck/LameDuck?wsdl" uri="tbh_8080/LameDuck/LameDuck.wsdl"/>
     <system systemId="http://tbh:8080/LameDuck/LameDuck?xsd=1" uri="tbh_8080/LameDuck/LameDuck.xsd_1.xsd"/>
     <system systemId="http://tbh:8080/LameDuck/LameDuck?xsd=2" uri="tbh_8080/LameDuck/LameDuck.xsd_2.xsd"/>
+    <system systemId="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Editor2" uri="www.oracle.com/us/sun/index.htm"/>
+    <system systemId="http://www.sun.com/wsbpel/2.0/process/executable/SUNExtension/Attachment" uri="www.oracle.com/us/sun/index.htm"/>
 </catalog>
