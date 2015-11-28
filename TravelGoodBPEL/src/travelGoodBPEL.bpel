@@ -16,13 +16,23 @@
     <import namespace="http://enterprise.netbeans.org/bpel/LameDuckWrapper" location="http://tbh:8080/LameDuck/LameDuck?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>-->
     <import namespace="http://travelGood.ws" location="travelGood.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
-        <partnerLink name="PartnerLink1" xmlns:tns="http://travelGood.ws" partnerLinkType="tns:travelGood" myRole="travelGoodPortTypeRole"/>
+        <partnerLink name="travelGood" xmlns:tns="http://travelGood.ws" partnerLinkType="tns:travelGood" myRole="travelGoodPortTypeRole"/>
     </partnerLinks>
     <variables>
         <variable name="CreateItineraryOut" xmlns:tns="http://travelGood.ws" messageType="tns:createItineraryResponse"/>
     </variables>
     <sequence>
-        <receive name="Receive1" createInstance="yes" partnerLink="PartnerLink1" operation="createItinerary" xmlns:tns="http://travelGood.ws" portType="tns:travelGoodPortType"/>
-        <reply name="createItineraryReply" partnerLink="PartnerLink1" operation="createItinerary" xmlns:tns="http://travelGood.ws" portType="tns:travelGoodPortType" variable="CreateItineraryOut"/>
+        <receive name="Receive1" createInstance="yes" partnerLink="travelGood" operation="createItinerary" xmlns:tns="http://travelGood.ws" portType="tns:travelGoodPortType"/>
+        <reply name="createItineraryReply" partnerLink="travelGood" operation="createItinerary" xmlns:tns="http://travelGood.ws" portType="tns:travelGoodPortType" variable="CreateItineraryOut"/>
+        <pick name="Pick1">
+            <onMessage partnerLink="travelGood" operation="getFlights" xmlns:tns="http://travelGood.ws" portType="tns:travelGoodPortType">
+                <sequence name="Sequence1">
+                    <assign name="Assign1"/>
+                    <invoke name="Invoke1"/>
+                    <assign name="Assign2"/>
+                    <reply name="Reply1" partnerLink="travelGood" operation="getFlights" portType="tns:travelGoodPortType"/>
+                </sequence>
+            </onMessage>
+        </pick>
     </sequence>
 </process>

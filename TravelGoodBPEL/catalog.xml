@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <nextCatalog catalog="nbproject/private/retriever/catalog.xml"/>
+    <system systemId="http://tbh:8080/LameDuck/LameDuckService?wsdl" uri="src/tbh_8080/LameDuck/LameDuckService.wsdl"/>
+    <system systemId="http://tbh:8080/LameDuck/LameDuckService?xsd=1" uri="src/tbh_8080/LameDuck/LameDuckService.xsd_1.xsd"/>
 </catalog>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lameduck.service;
+package ws;
 
 import dk.dtu.imm.fastmoney.BankService;
 import dk.dtu.imm.fastmoney.CreditCardFaultMessage;
@@ -24,6 +24,7 @@ import ws.lameduck.BookingFailedFault;
  *
  * @author jeppe
  */
+/*
 @WebService(serviceName = "LameDuckService", portName = "LameDuckBindingPort", endpointInterface = "ws.lameduck.LameDuck", targetNamespace = "http://LameDuck.ws", wsdlLocation = "WEB-INF/wsdl/LameDuck/LameDuck.wsdl")
 public class LameDuck {
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl")
@@ -123,3 +124,4 @@ public class LameDuck {
     }
     
 }
+*/
