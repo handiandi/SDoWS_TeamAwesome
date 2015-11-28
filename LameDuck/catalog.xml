@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
-    <system systemId="file:/home/jeppe/Downloads/BankService.wsdl" uri="src/conf/xml-resources/web-services/FastMoney/wsdl/BankService.wsdl"/>
     <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?wsdl" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl"/>
     <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?wsdl=1" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl_1.wsdl"/>
     <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
     <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=2" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_2.xsd"/>
+    <system systemId="file:/home/jeppe/NetBeansProjects/LameDuck/src/java/LameDuck.wsdl" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl"/>
+    <nextCatalog catalog="nbproject/private/retriever/catalog.xml"/>
+    <system systemId="file:/home/jeppe/NetBeansProjects/LameDuck/src/java/lameduck/auxiliarytypes/LameDuck.wsdl" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl"/>
+    <system systemId="file:/home/jeppe/NetBeansProjects/LameDuck/src/java/lameduck/auxiliarytypes/BankService.xsd" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/BankService.xsd"/>
 </catalog>
