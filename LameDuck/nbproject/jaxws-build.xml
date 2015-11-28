@@ -10,23 +10,6 @@
                 JAX-WS WSGEN SECTION
                 ===================
             -->
-    <target name="wsgen-init" depends="init, -do-compile">
-        <mkdir dir="${build.generated.sources.dir}/jax-ws/resources/"/>
-        <mkdir dir="${build.classes.dir}"/>
-        <mkdir dir="${build.classes.dir}/META-INF"/>
-        <property name="j2ee.platform.wsgen.classpath" value="${libs.jaxws21.classpath}"/>
-        <taskdef name="wsgen" classname="com.sun.tools.ws.ant.WsGen">
-            <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
-        </taskdef>
-    </target>
-    <target name="wsgen-LameDuck" depends="wsgen-init">
-        <copy todir="${build.classes.dir}/META-INF">
-            <fileset dir="${webinf.dir}" includes="wsit-com.lameduck.service.LameDuck.xml"/>
-        </copy>
-        <wsgen sourcedestdir="${build.generated.sources.dir}/jax-ws" resourcedestdir="${build.generated.sources.dir}/jax-ws/resources/" destdir="${build.generated.sources.dir}/jax-ws" verbose="true" keep="true" genwsdl="true" sei="com.lameduck.service.LameDuck" xendorsed="true">
-            <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
-        </wsgen>
-    </target>
     <!--
                 ===================
                 JAX-WS WSIMPORT SECTION
@@ -34,6 +17,7 @@
             -->
     <target name="wsimport-init" depends="init">
         <fail if="${wsimport.bad.version}" message="WsImport ant task defined in the classpath ${j2ee.platform.wsimport.classpath} has a serious bug. See http://wiki.netbeans.org/MetroIssue for details."/>
+        <mkdir dir="${build.generated.sources.dir}/jax-ws"/>
         <mkdir dir="${build.generated.sources.dir}/jax-ws"/>
         <property name="j2ee.platform.wsimport.classpath" value="${libs.jaxws21.classpath}"/>
         <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
@@ -59,5 +43,25 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/dk/dtu/imm/fastmoney"/>
         <delete dir="${build.generated.dir}/jax-wsCache/BankService"/>
     </target>
+    <target name="wsimport-service-LameDuck" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/service/LameDuck"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/service/LameDuck" destdir="${build.generated.dir}/jax-wsCache/service/LameDuck" wsdl="${basedir}/${conf-dir}xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/service/LameDuck"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/service/LameDuck">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy todir="${build.web.dir}/WEB-INF/wsdl/LameDuck">
+            <fileset dir="${basedir}/${conf-dir}xml-resources/web-services/LameDuck/wsdl/"/>
+        </copy>
+    </target>
+    <target name="wsimport-service-clean-LameDuck" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/ws/lameduck"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/service/LameDuck"/>
+    </target>
     <target name="wsimport-client-generate" depends="wsimport-client-BankService"/>
+    <target name="wsimport-service-generate" depends="wsimport-service-LameDuck"/>
 </project>
