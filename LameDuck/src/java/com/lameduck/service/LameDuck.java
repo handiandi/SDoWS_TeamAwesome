@@ -41,18 +41,17 @@ public class LameDuck {
             availableFlights.add(new FlightInformation(i,i*1000-0.05,"LameDuck",f));
         }
     }
-    /**
-     * Web service operation
-     */
     private boolean matches(Flight f1, String start,String end,String date){
         boolean b1 = f1.startAirport.equals(start);
         boolean b2 = f1.endAirport.equals(end);
-        boolean b3 = f1.liftOffTime.equals(end);
+        boolean b3 = matchIgnoreTime(f1.liftOffTime,end);
         return b1&&b2&&b3;
     }
-
+    private boolean matchIgnoreTime(String date1,String date2){
+        return date1.substring(6).equals(date2.substring(6));
+    }
     /**
-     *
+     * Web service operation
      * @param startsAt
      * @param endsAt
      * @param date
@@ -62,15 +61,10 @@ public class LameDuck {
     public List<FlightInformation> getFlights(@WebParam(name = "startsAt") String startsAt, @WebParam(name = "endsAt") String endsAt, @WebParam(name = "date") String date) {
         //TODO write some interesting hard coded flightinformation object
         List<FlightInformation> output = new ArrayList<>();
-        availableFlights.stream().forEach((f) -> {
-            Flight flight = f.getFlight();
-            if (matches(flight,startsAt,endsAt,date)) {
-                output.add(f);
-            }
-        });
-        return output;
-        
-        
+        for(FlightInformation fi: availableFlights){
+            output.add(fi);
+        }
+        return output;   
     }
     
    
