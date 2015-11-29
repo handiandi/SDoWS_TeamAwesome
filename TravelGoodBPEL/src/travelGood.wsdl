@@ -32,7 +32,7 @@
     <message name="createItineraryInput">
     </message>
     <message name="createItineraryResponse">
-        <part name="itineraryCreated" type="xsd:boolean"/>
+        <part name="itineraryCreated" type="xsd:string"/>
     </message>
     <message name="getFligtsInput">
         <part name="startsAt" type="xsd:string"/>

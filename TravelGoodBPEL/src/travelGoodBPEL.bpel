@@ -15,22 +15,48 @@
     <import namespace="http://travelGoodBPEL.ws" location="travelGoodBPEL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/> 
     <import namespace="http://enterprise.netbeans.org/bpel/LameDuckWrapper" location="http://tbh:8080/LameDuck/LameDuck?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>-->
     <import namespace="http://travelGood.ws" location="travelGood.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <!--<import namespace="http://enterprise.netbeans.org/bpel/LameDuckWrapper" location="http://tbh:8080/LameDuck/LameDuck?wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>-->
+    <import namespace="http://enterprise.netbeans.org/bpel/LameDuckServiceWrapper" location="LameDuckServiceWrapper.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+    <import namespace="http://LameDuck.ws" location="tbh_8080/LameDuck/LameDuckService.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
     <partnerLinks>
+        <partnerLink name="LameDuck" xmlns:tns="http://enterprise.netbeans.org/bpel/LameDuckServiceWrapper" partnerLinkType="tns:LameDuckLinkType" partnerRole="LameDuckRole"/>
         <partnerLink name="travelGood" xmlns:tns="http://travelGood.ws" partnerLinkType="tns:travelGood" myRole="travelGoodPortTypeRole"/>
     </partnerLinks>
     <variables>
+        <variable name="GetFlightsOut" xmlns:tns="http://travelGood.ws" messageType="tns:getFlightsResponse"/>
+        <variable name="GetFlightsIn" xmlns:tns="http://travelGood.ws" messageType="tns:getFligtsInput"/>
+        <variable name="GetFlightsFromLDOut" xmlns:tns="http://LameDuck.ws" messageType="tns:getFlightsResponse"/>
+        <variable name="GetFlightsFromLDIn" xmlns:tns="http://LameDuck.ws" messageType="tns:getFlightsRequest"/>
         <variable name="CreateItineraryOut" xmlns:tns="http://travelGood.ws" messageType="tns:createItineraryResponse"/>
     </variables>
     <sequence>
         <receive name="Receive1" createInstance="yes" partnerLink="travelGood" operation="createItinerary" xmlns:tns="http://travelGood.ws" portType="tns:travelGoodPortType"/>
         <reply name="createItineraryReply" partnerLink="travelGood" operation="createItinerary" xmlns:tns="http://travelGood.ws" portType="tns:travelGoodPortType" variable="CreateItineraryOut"/>
         <pick name="Pick1">
-            <onMessage partnerLink="travelGood" operation="getFlights" xmlns:tns="http://travelGood.ws" portType="tns:travelGoodPortType">
+            <onMessage partnerLink="travelGood" operation="getFlights" xmlns:tns="http://travelGood.ws" portType="tns:travelGoodPortType" variable="GetFlightsIn">
                 <sequence name="Sequence1">
-                    <assign name="Assign1"/>
-                    <invoke name="Invoke1"/>
-                    <assign name="Assign2"/>
-                    <reply name="Reply1" partnerLink="travelGood" operation="getFlights" portType="tns:travelGoodPortType"/>
+                    <assign name="Assign1">
+                        <copy>
+                            <from variable="GetFlightsIn" part="startsAt"/>
+                            <to variable="GetFlightsIn" part="startsAt"/>
+                        </copy>
+                        <copy>
+                            <from variable="GetFlightsIn" part="endsAt"/>
+                            <to variable="GetFlightsIn" part="endsAt"/>
+                        </copy>
+                        <copy>
+                            <from variable="GetFlightsIn" part="date"/>
+                            <to variable="GetFlightsIn" part="date"/>
+                        </copy>
+                    </assign>
+                    <invoke name="getFlightsFromLD" partnerLink="LameDuck" operation="getFlights" xmlns:tns="http://LameDuck.ws" portType="tns:LameDuck" inputVariable="GetFlightsFromLDIn" outputVariable="GetFlightsFromLDOut"/>
+                    <assign name="Assign2">
+                        <copy>
+                            <from>$GetFlightsFromLDOut.response/flightInformation</from>
+                            <to variable="GetFlightsOut" part="part1"/>
+                        </copy>
+                    </assign>
+                    <reply name="Reply1" partnerLink="travelGood" operation="getFlights" portType="tns:travelGoodPortType" variable="GetFlightsOut"/>
                 </sequence>
             </onMessage>
         </pick>
