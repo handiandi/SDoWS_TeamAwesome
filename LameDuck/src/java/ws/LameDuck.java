@@ -76,9 +76,9 @@ public class LameDuck {
                     flightInfo = fi;
                     break;
                 }
-            if(!validateCreditCard(GROUP,request.getCreditCardInfo(),request.getPrice())) throw new BookingFailedFault("",new BookingFailedException());
+            if(!validateCreditCard(GROUP,request.getCreditCardInfo(),flightInfo.getPrice())) throw new BookingFailedFault("",new BookingFailedException());
             
-            hasPaid = chargeCreditCard(GROUP,request.getCreditCardInfo(),request.getPrice(),ACCOUNT);
+            hasPaid = chargeCreditCard(GROUP,request.getCreditCardInfo(),flightInfo.getPrice(),ACCOUNT);
             availableFlights.remove(flightInfo);
             bookedFlights.add(flightInfo);
             flightInfo.setStatus("booked");
