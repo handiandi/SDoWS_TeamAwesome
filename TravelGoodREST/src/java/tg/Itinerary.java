@@ -7,38 +7,34 @@ package tg;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.datatype.XMLGregorianCalendar;
 import lameDuckClient.Flight;
 import lameDuckClient.FlightInformation;
+import niceViewClient.Hotel;
+import niceViewClient.HotelInformation;
 
 /**
  *
  * @author Anders
  */
 public class Itinerary {
-    private int numberOfFlights = 0;
-    private int numberOfHotels = 0;
-    private List<FlightInformation> flights = new ArrayList<>();
-    //List<HotelInformation> hotels = new ArrayList<>();
+    List<FlightInformation> flights = new ArrayList<>();
+    List<HotelInformation> hotels = new ArrayList<>();
     
+    private boolean booked = false;
     public Itinerary(){
         
     }
 
-    public int getNumberOfFlights() {
-        return numberOfFlights;
+    public boolean isBooked() {
+        return booked;
     }
 
-    public void setNumberOfFlights() {
-        this.numberOfFlights = this.flights.size();
+    public void setBooked(boolean booked) {
+        this.booked = booked;
     }
 
-    public int getNumberOfHotels() {
-        return numberOfHotels;
-    }
-
-    public void setNumberOfHotels(int numberOfHotels) {
-        this.numberOfHotels = numberOfHotels;
-    }
+   
 
     public List<FlightInformation> getFlights() {
         return flights;
@@ -50,9 +46,11 @@ public class Itinerary {
     
     public void addFlight(FlightInformation f){
         this.flights.add(f);
-        this.setNumberOfFlights();
     }
     
+    public void addHotel(HotelInformation h){
+        this.hotels.add(h);
+    }
     public void sortLists(){
         List<FlightInformation> sortedFlightList = new ArrayList<>();
         //List<FlightInformation> custormerFlights = iteneraryFlights.get(customerID);
@@ -75,10 +73,8 @@ public class Itinerary {
             sortedFlightList.add(this.flights.remove(index));
             
         }//end while-loop   
-        
-        //Do the same for hotel here!
-        
         this.setFlights(sortedFlightList);
+        
     }
     
     public List<FlightInformation> getBookings(){
@@ -102,15 +98,57 @@ public class Itinerary {
         return returnVal;
     }
     
-    public boolean setFlightConfirmed(int bookingNumber){
+    public boolean isHotelInItinerary(int bookingNumber){
         boolean returnVal = false;
-        for(FlightInformation f : this.flights){
-            if(f.getBookingNumber() == bookingNumber){
-                f.setStatus("confirmed");
+        for(HotelInformation h : this.hotels){
+            if(h.getBookingNumber() == bookingNumber){
                 returnVal = true;
                 break;
             }
         }
         return returnVal;
+    }
+    
+    public boolean setFlightStatus(int bookingNumber, String status){
+        boolean returnVal = false;
+        for(FlightInformation f : this.flights){
+            if(f.getBookingNumber() == bookingNumber){
+                f.setStatus(status);
+                returnVal = true;
+                break;
+            }
+        }
+        return returnVal;
+    }
+    
+    public boolean setHotelStatus(int bookingNumber, String status){
+        boolean returnVal = false;
+        for(HotelInformation h : this.hotels){
+            if(h.getBookingNumber() == bookingNumber){
+                h.setStatus(status);
+                returnVal = true;
+                break;
+            }
+        }
+        return returnVal;
+    }
+
+    public List<HotelInformation> getHotels() {
+        return hotels;
+    }
+
+    public void setHotels(List<HotelInformation> hotels) {
+        this.hotels = hotels;
+    }
+    
+    public XMLGregorianCalendar getEarlistDate(){
+        XMLGregorianCalendar date =null;
+        date =flights.get(0).getFlight().getLiftOffTime();
+        for(FlightInformation f : flights){
+            if(date.compare(f.getFlight().getLiftOffTime()) == 1){
+                date =f.getFlight().getLiftOffTime();
+            }
+        }
+        return date;
     }
 }
