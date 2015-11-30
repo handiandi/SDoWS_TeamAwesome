@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Users/Troels/Dropbox/DTU/02267%20Software%20Development%20of%20Web%20Services/GITv2/SDoWS_TeamAwesome/LameDuck/src/java/lameduck/auxiliarytypes/LameDuck.wsdl" uri="src/LameDuck.wsdl"/>
+    <system systemId="file:/C:/Users/Troels/Dropbox/DTU/02267%20Software%20Development%20of%20Web%20Services/GITv2/SDoWS_TeamAwesome/LameDuck/src/java/lameduck/auxiliarytypes/BankService.xsd" uri="src/BankService.xsd"/>
     <nextCatalog catalog="nbproject/private/retriever/catalog.xml"/>
 </catalog>
