@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system"/>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?wsdl" uri="src/conf/xml-resources/web-service-references/BankService_1/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl"/>
+    <nextCatalog catalog="nbproject/private/retriever/catalog.xml"/>
+    <system systemId="file:/home/jeppe/Downloads/BankService.wsdl" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/BankService.wsdl"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?wsdl=1" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.wsdl_1.wsdl"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=1" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_1.xsd"/>
+    <system systemId="http://fastmoney.imm.dtu.dk:8080/BankService?xsd=2" uri="src/conf/xml-resources/web-service-references/BankService/wsdl/fastmoney.imm.dtu.dk_8080/BankService.xsd_2.xsd"/>
+    <system systemId="file:/home/jeppe/Documents/WebServices/SDoWS_TeamAwesome/NiceView/src/java/NiceView.wsdl" uri="src/conf/xml-resources/web-services/NiceView/wsdl/NiceView.wsdl"/>
+    <system systemId="file:/home/jeppe/Documents/WebServices/SDoWS_TeamAwesome/NiceView/src/java/BankService.xsd" uri="src/conf/xml-resources/web-services/NiceView/wsdl/BankService.xsd"/>
+</catalog>
