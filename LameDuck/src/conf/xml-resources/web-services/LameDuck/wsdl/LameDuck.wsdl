@@ -43,7 +43,6 @@
                 <xsd:complexType>
                     <xsd:sequence>
                         <xsd:element name="bookingNumber" type="xsd:int"></xsd:element>
-                        <xsd:element name="price" type="xsd:int"></xsd:element>
                         <xsd:element name="creditCardInfo" type="ns2:creditCardInfoType"></xsd:element>
                     </xsd:sequence>
                 </xsd:complexType>

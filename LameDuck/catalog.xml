@@ -10,4 +10,6 @@
     <system systemId="file:C:/Users/Troels/Dropbox/DTU/02267 Software Development of Web Services/GITv2/SDoWS_TeamAwesome/LameDuck/src/java/lameduck/auxiliarytypes/BankService.xsd" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/BankService.xsd"/>
     <system systemId="file:/C:/Users/Troels/Dropbox/DTU/02267%20Software%20Development%20of%20Web%20Services/GITv2/SDoWS_TeamAwesome/LameDuck/src/java/lameduck/auxiliarytypes/LameDuck.wsdl" uri="src/conf/xml-resources/web-services/LameDuckFromWSDL/wsdl/LameDuck.wsdl"/>
     <system systemId="file:/C:/Users/Troels/Dropbox/DTU/02267%20Software%20Development%20of%20Web%20Services/GITv2/SDoWS_TeamAwesome/LameDuck/src/java/lameduck/auxiliarytypes/BankService.xsd" uri="src/conf/xml-resources/web-services/LameDuckFromWSDL/wsdl/BankService.xsd"/>
+    <system systemId="file:/home/jeppe/Documents/WebServices/SDoWS_TeamAwesome/LameDuck/src/java/lameduck/auxiliarytypes/LameDuck.wsdl" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/LameDuck.wsdl"/>
+    <system systemId="file:/home/jeppe/Documents/WebServices/SDoWS_TeamAwesome/LameDuck/src/java/lameduck/auxiliarytypes/BankService.xsd" uri="src/conf/xml-resources/web-services/LameDuck/wsdl/BankService.xsd"/>
 </catalog>
