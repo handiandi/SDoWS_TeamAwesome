@@ -56,7 +56,7 @@ public class NiceView {
         output.setBookingNumber(bookingNumber);
         output.setPrice(price);
         output.setHotel(hotel);
-        output.setStatus("available");
+        output.setStatus("unconfirmed");
         return output;
     }
     private int bookRef = 0;
@@ -87,17 +87,16 @@ public class NiceView {
         
         allHotelsList.add(CasaDeLyngby);
         allHotelsList.add(Hotellet);
+
     }
     public ws.niceview.HotelList getHotels(ws.niceview.GetHotelsRequest request) {
-        request.getCity();
         HotelList output = new HotelList();
-        List<Hotel> list = new ArrayList<>();
         Date arrival = request.getArrival().toGregorianCalendar().getTime();
         Date departure = request.getDeparture().toGregorianCalendar().getTime();
         int days = (int) ((departure.getTime()-arrival.getTime())/(1000*60*60*24));
         for(Hotel h: allHotelsList){
             if(h.getAddress().getCity().equals(request.getCity())) 
-                output.getHotel().add(createHotelInformation(bookingNumber++,h.getPrice()*days,h));
+                output.getHotel().add(createHotelInformation(hotelsInAreaList.isEmpty()?0:hotelsInAreaList.get(hotelsInAreaList.size()-1).getBookingNumber()+1,h.getPrice()*days,h));
         }
         hotelsInAreaList.addAll(output.getHotel());
         return output;

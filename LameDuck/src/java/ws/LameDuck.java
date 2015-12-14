@@ -58,7 +58,7 @@ public class LameDuck {
             fi.setPrice(1000);
             fi.setFlight(f);
             fi.setAirlineReservationService("LameDuck");
-            fi.setStatus("available");
+            fi.setStatus("unconfirmed");
             availableFlights.add(fi);
         }
     }

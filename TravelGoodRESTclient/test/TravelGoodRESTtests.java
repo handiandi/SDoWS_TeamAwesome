@@ -185,14 +185,26 @@ public class TravelGoodRESTtests {
     @Test
     public void testP1(){
         int id = createItinerary();
+        int bf1,bf2,bf3;
+        int bh1,bh2;
         List<FlightInformation> flights = getFlights("Copenhagen","Stockholm","2015-09-20T18:30:00");
-        addFlight(""+id,""+flights.get(0).getBookingNumber());
+        addFlight(""+id,""+(bf1 = flights.get(1).getBookingNumber()));
         List<HotelInformation> hotels = getHotels("2015-09-20T18:30:00","2015-09-23T18:30:00","København");
-        addHotel(""+id,""+hotels.get(0).getBookingNumber());
-        addFlight(""+id,""+flights.get(1).getBookingNumber());
-        addFlight(""+id,""+flights.get(2).getBookingNumber());
-        addHotel(""+id,""+hotels.get(1).getBookingNumber());
+        hotels.addAll(getHotels("2015-09-24T18:30:00","2015-09-25T18:30:00","Kgs. Lyngby"));
+        addHotel(""+id,""+(bh1 = hotels.get(0).getBookingNumber()));
+        addFlight(""+id,""+(bf2 = flights.get(2).getBookingNumber()));
+        addFlight(""+id,""+(bf3 = flights.get(3).getBookingNumber()));
+        addHotel(""+id,""+(bh2 = hotels.get(1).getBookingNumber()));
         Itinerary itin = getItinerary(""+id);
+        assertEquals(3,itin.getFlights().size());
+        assertTrue(itin.isFlightInItinerary(bf1));
+        assertTrue(itin.isFlightInItinerary(bf2));
+        assertTrue(itin.isFlightInItinerary(bf3));
+        assertEquals(2,hotels.size());//itin.getHotels().size());
+        assertNotSame(bh1,bh2);
+        assertEquals(bh1,itin.getHotels().get(0).getBookingNumber());
+        assertEquals(bh2,itin.getHotels().get(1).getBookingNumber());
+        
         //asserts
     }
     @Test
@@ -202,6 +214,9 @@ public class TravelGoodRESTtests {
         List<FlightInformation> flights = getFlights("Copenhagen","Stockholm","2015-09-20T18:30:00");
         addFlight(""+id,""+flights.get(0).getBookingNumber());
         cancelItinerary(""+id);
+        Itinerary i = getItinerary(""+id);
+        assertEquals("unconfirmed",i.getFlights().get(0).getStatus());
+        
     }
     @Test
     public void testB(){
@@ -212,10 +227,39 @@ public class TravelGoodRESTtests {
         List<HotelInformation> hotels = getHotels("2015-09-20T18:30:00","2015-09-23T18:30:00","København");
         addHotel(""+id,""+hotels.get(0).getBookingNumber());
         addFlight(""+id,""+flights.get(1).getBookingNumber());
+        Itinerary i = getItinerary(""+id);
+        assertEquals("unconfirmed",i.getFlights().get(0).getStatus());
+        assertEquals("unconfirmed",i.getFlights().get(1).getStatus());
+        assertEquals("unconfirmed",i.getHotels().get(0).getStatus());
+        bookItinerary(""+id);
+        i = getItinerary(""+id);
+        assertEquals("confirmed",i.getFlights().get(0).getStatus());
+        assertEquals("confirmed",i.getFlights().get(1).getStatus());
+        assertEquals("confirmed",i.getHotels().get(0).getStatus());
     }
     @Test
     public void testC1(){
         //book 3 stuff and cancel them
+        int id = createItinerary();
+        List<FlightInformation> flights = getFlights("Copenhagen","Stockholm","2015-09-20T18:30:00");
+        addFlight(""+id,""+flights.get(0).getBookingNumber());
+        List<HotelInformation> hotels = getHotels("2015-09-20T18:30:00","2015-09-23T18:30:00","København");
+        addHotel(""+id,""+hotels.get(0).getBookingNumber());
+        addFlight(""+id,""+flights.get(1).getBookingNumber());
+        Itinerary i = getItinerary(""+id);
+        assertEquals("unconfirmed",i.getFlights().get(0).getStatus());
+        assertEquals("unconfirmed",i.getFlights().get(1).getStatus());
+        assertEquals("unconfirmed",i.getHotels().get(0).getStatus());
+        bookItinerary(""+id);
+        i = getItinerary(""+id);
+        assertEquals("confirmed",i.getFlights().get(0).getStatus());
+        assertEquals("confirmed",i.getFlights().get(1).getStatus());
+        assertEquals("confirmed",i.getHotels().get(0).getStatus());
+        cancelItinerary(""+id);
+        i = getItinerary(""+id);
+        assertEquals("cancelled",i.getFlights().get(0).getStatus());
+        assertEquals("cancelled",i.getFlights().get(1).getStatus());
+        assertEquals("cancelled",i.getHotels().get(0).getStatus());
     }
     @Test
     public void testC2(){
