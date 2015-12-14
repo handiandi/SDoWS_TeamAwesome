@@ -3,9 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Anders/Documents/NetBeansProjects/SDoWS_TeamAwesome/TravelGoodREST/build/generated-sources/jax-ws/lameDuckClient/LameDuckService.java</file>
-            <file>file:/C:/Users/Anders/Documents/NetBeansProjects/SDoWS_TeamAwesome/TravelGoodREST/src/java/tg/TravelGood.java</file>
-            <file>file:/C:/Users/Anders/Documents/NetBeansProjects/SDoWS_TeamAwesome/TravelGoodREST/src/java/tg/Itinerary.java</file>
+            <file>file:/home/jeppe/Documents/WebServices/SDoWS_TeamAwesome/TravelGoodREST/src/java/tg/TravelGood.java</file>
+            <file>file:/home/jeppe/Documents/WebServices/SDoWS_TeamAwesome/TravelGoodREST/nbproject/jaxws-build.xml</file>
         </group>
     </open-files>
 </project-private>

@@ -29,6 +29,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import lameDuckClient.*;
 import niceViewClient.BookHotelRequest;
 import niceViewClient.BookingFailedMessage;
+import niceViewClient.CancelHotelRequest;
 import niceViewClient.CancellingFailedMessage;
 import niceViewClient.GetHotelsRequest;
 import niceViewClient.HotelInformation;
@@ -371,23 +372,25 @@ public class TravelGood {
         LameDuck port = service.getLameDuckBindingPort();
         boolean cancelFailed = false;
         for(FlightInformation  f : flights){
-            lameDuckClient.CancelFlight cf = new CancelFlight();
-            cf.setBookingNumber(f.getBookingNumber());
-            lameDuckClient.CreditCardInfoType credit = getCreditCardInfoFlight();
-            cf.setCreditCardInfo(credit);
-            try{
-                if(port.cancelFlight(cf)){
-                    if(!itene.setFlightStatus(f.getBookingNumber(), "cancelled")){
-                        Logger.getLogger(TravelGood.class.getName()).
-                                log(Level.SEVERE, "Something wierd happened!");
+            if(f.getStatus().equals("booked")) {
+                lameDuckClient.CancelFlight cf = new CancelFlight();
+                cf.setBookingNumber(f.getBookingNumber());
+                lameDuckClient.CreditCardInfoType credit = getCreditCardInfoFlight();
+                cf.setCreditCardInfo(credit);
+                try{
+                    if(port.cancelFlight(cf)){
+                        if(!itene.setFlightStatus(f.getBookingNumber(), "cancelled")){
+                            Logger.getLogger(TravelGood.class.getName()).
+                                    log(Level.SEVERE, "Something wierd happened!");
+                        }
+                    } //end if LameDuck port
+                    else{
+                        cancelFailed = true;
                     }
-                } //end if LameDuck port
-                else{
+                }
+                catch(Exception e){
                     cancelFailed = true;
                 }
-            }
-            catch(Exception e){
-                cancelFailed = true;
             }
         } //end for-loop flightInformation
         
@@ -469,7 +472,41 @@ public class TravelGood {
         */
     }
     
-   
+    @Path("/reset")
+    @PUT
+    public void reset(){
+        try {
+            lameDuckClient.LameDuckService lds = new lameDuckClient.LameDuckService();
+            niceViewClient.NiceViewService nvs = new niceViewClient.NiceViewService();
+            niceViewClient.NiceView nvp = nvs.getNiceViewBindingPort();
+            lameDuckClient.LameDuck ldp = lds.getLameDuckBindingPort();
+            List<CancelFlight> cflist = new ArrayList<>();
+            List<CancelHotelRequest> chlist = new ArrayList<>();
+            
+            for(Itinerary i : itineraries.values()){
+                for(FlightInformation fi : i.flights){
+                    CancelFlight cf = new CancelFlight();
+                    cf.setBookingNumber(fi.getBookingNumber());
+                    cf.setCreditCardInfo(getCreditCardInfoFlight());
+                    cf.setPrice(fi.getPrice());
+                    cflist.add(cf);
+                }
+                for(HotelInformation hi : i.hotels){
+                    CancelHotelRequest ch = new CancelHotelRequest();
+                    ch.setBookingNumber(hi.getBookingNumber());
+                    chlist.add(ch);
+                }
+            }
+            for(CancelFlight ch : cflist) ldp.cancelFlight(ch);
+            for(CancelHotelRequest ch : chlist) nvp.cancelHotel(ch);
+            itineraries.clear();
+        } catch (CancellingFailedMessage ex) {
+            Logger.getLogger(TravelGood.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+    }
     
    
     
